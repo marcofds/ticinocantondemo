@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repubblica e Cantone Ticino</title>
+    <meta name="description" content="Page web per il Cantone Ticino, con tutte le informazioni necessarie per i cittadini e le loro esigenze quotidiane.">
+    
+    <!-- CSS for styling and effects -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        .header-overlay {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Full window height */
+            background: url('BackgroundTi.png') center center / cover no-repeat;
+            overflow: hidden;
+        }
+        .overlay-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            z-index: 1;
+        }
+        .overlay-content h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .overlay-content p {
+            font-size: 1.2em;
+        }
+        .cta-button {
+            margin-top: 20px;
+            padding: 10px 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            .overlay-content h1 {
+                font-size: 2em;
+            }
+            .overlay-content p {
+                font-size: 1em;
+            }
+            .cta-button {
+                padding: 8px 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Modern Widget Styling */
+        .widget-container {
+            position: fixed;
+            bottom: 20px; /* Adjust to keep it visible */
+            right: 20px;
+            width: 400px;
+            height: 700px; /* Original size */
+            z-index: 9999;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(calc(100% - 60px)); /* Keep just a small part visible when closed */
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0; /* Start hidden */
+        }
+
+        .widget-header {
+            background-color: #000;
+            color: #fff;
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .widget-container iframe {
+            width: 100%;
+            height: calc(100% - 50px); /* Adjust height to accommodate the header */
+            border: none;
+        }
+
+        /* Hover area to show chat */
+        .hover-area {
+            position: fixed;
+            bottom: 40px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            z-index: 999;
+            background-color: #0072AC;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .hover-area:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .hover-area:before {
+            content: 'Chat';
+            color: white;
+            font-size: 1.2em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-overlay">
+        <div class="overlay-content">
+            <h1>Canton Ticino</h1>
+            <p>25 & 26 September 2024 - Palexpo Geneva</p>
+            <button class="cta-button">Learn More</button>
+        </div>
+    </div>
+
+    <!-- Modern Widget Container -->
+    <div class="widget-container" id="chat-widget">
+        <div class="widget-header" id="chat-header">
+            <span>Copilot Chat</span>
+        </div>
+        <iframe src="https://copilotstudio.microsoft.com/environments/Default-07390405-6169-4151-8710-e72a6238eba5/bots/crbf4_ticinoMio/webchat?__version__=2"></iframe>
+    </div>
+
+    <!-- Hover Area -->
+    <div class="hover-area" id="hover-area"></div>
+
+    <script>
+        const chatWidget = document.getElementById('chat-widget');
+        const chatHeader = document.getElementById('chat-header');
+
+        chatHeader.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (chatWidget.style.transform === 'translateY(0px)') {
+                chatWidget.style.transform = 'translateY(calc(100% - 80px))';
+                chatWidget.style.opacity = '0';
+            } else {
+                chatWidget.style.transform = 'translateY(0px)';
+                chatWidget.style.opacity = '1';
+            }
+        });
+
+        chatWidget.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        document.body.addEventListener('click', () => {
+            chatWidget.style.transform = 'translateY(calc(100% - 80px))';
+            chatWidget.style.opacity = '0';
+        });
+
+        const hoverArea = document.getElementById('hover-area');
+        hoverArea.addEventListener('mouseenter', () => {
+            chatWidget.style.transform = 'translateY(0px)';
+            chatWidget.style.opacity = '1';
+        });
+        hoverArea.addEventListener('mouseleave', () => {
+            if (chatWidget.style.transform !== 'translateY(0px)') {
+                chatWidget.style.transform = 'translateY(calc(100% - 80px))';
+                chatWidget.style.opacity = '0';
+            }
+        });
+    </script>
+
+</body>
+</html>
